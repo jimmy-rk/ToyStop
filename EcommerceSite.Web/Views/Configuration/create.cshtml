@@ -1,0 +1,41 @@
+﻿@model EcommerceSite.Entities.Config
+@{
+    ViewBag.Title = "create";
+}
+
+<div class="container-fluid m-5 p-3 d-flex justify-content-center ">
+
+    @using (Html.BeginForm())
+    {
+        <div class="form-horizontal">
+            <h4 class=" p-3 bg-info text-white text-uppercase ">New Configuration</h4>
+            
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(x => x.Key, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Key, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Key, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Value, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(x => x.Value, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 mb-3">
+                    <input type="submit" value="Create" class="btn-block btn-info" />
+                </div>
+                <div class="text-center">
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+        </div>
+    }
+
+    
+ </div>

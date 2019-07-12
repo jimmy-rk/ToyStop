@@ -1,0 +1,54 @@
+﻿@model EcommerceSite.Web.ViewModels.OrdersViewModel
+@{
+    ViewBag.Title = "Orders";
+}
+<div class="container-fluid m-5 p-5 mx-auto">
+    <h2 class="text-center p-3 bg-info text-white">Orders</h2>
+    
+
+    <table id="OrdersTable" class="table table-striped mt-5 pt-5">
+        <thead class="bg-info text-white text-uppercase">
+            <tr>
+                <th class="font-weight-bold">User ID</th>
+                <th class="font-weight-bold">Total Price</th>
+                <th class="font-weight-bold">Status</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Orders != null && Model.Orders.Count > 0)
+            {
+
+                foreach (var order in Model.Orders)
+                {
+                    <tr>
+                        <td>@order.UserID</td>
+                        <td>
+                            @order.TotalAmount
+                        </td>
+                        <td>@order.Status</td>
+                        <td class="wrap-td">
+                            <a class="detailBtn btn-lg btn-info" data-id="@order.ID" href="@Url.Action("Details", "Order", new { ID = order.ID })">Details</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-danger" colspan="4">No Order found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<script>
+	function focusAction(controlToFocus) {
+		$('html, body').animate({
+			scrollTop: $("#" + controlToFocus).offset().top - 100
+		}, 1000);
+	}
+</script>

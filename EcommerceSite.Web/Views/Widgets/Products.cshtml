@@ -1,0 +1,83 @@
+﻿@model EcommerceSite.Web.ViewModels.ProductsWidgetViewModel
+
+
+
+@{
+    var defaultImageURL = "/Content/images/system/placeholder-image.png";
+}
+
+@if (Model != null && Model.Products != null)
+{
+    
+    
+
+    
+<div class="row mx-auto">
+
+    @*@foreach (var product in Model.Products)
+    {
+        var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
+
+        <div class="col-lg-3 col-md-4  col-6">
+            <div class="d-block mb-4 h-100 text-center">
+
+
+                <a href="@Url.Action("Details", "Product", new { ID = product.ID })">
+                    <img class="productImg img-fluid img-thumbnail" src="@imageURL" alt="" />
+                </a>
+                <div >
+                    <strong class="text-uppercase">@product.Name</strong>
+                    <div>$@product.Price</div>
+                    <div class="cartDiv bg-info"><a class="productAddToCart text-white" href="#"  data-id="@product.ID">ADD TO CART</a></div>
+                    
+                </div>
+            </div>
+        </div>
+    }*@
+    @foreach (var product in Model.Products)
+    {
+        var imageURL = string.IsNullOrEmpty(product.ImageURL) ? defaultImageURL : product.ImageURL;
+
+        <div class="col-lg-3 col-md-4 col-sm-6 mx-auto">
+            <div class="productImg d-block mb-4 h-100 text-center">
+                <img class="img-fluid img-thumbnail" src="@imageURL" alt="" />
+
+                <span class="productAddToCart" href="#" data-id="@product.ID"><img src="~/Content/images/cart.png" /></span>
+                <a class="productView text-decoration-none" href="@Url.Action("Details", "Product", new { ID = product.ID })">Details</a>
+                
+                <div>
+                    <strong class="text-uppercase">@product.Name</strong>
+                    <div>$@product.Price</div>
+
+                </div>
+            </div>
+        </div>
+    }
+</div> 
+}
+
+<script>    
+    var products;
+    $(".productAddToCart").click(function () {
+        debugger;
+        var existingCookieData = $.cookie('CartProducts');
+
+        if (existingCookieData != undefined && existingCookieData != "" && existingCookieData != null) {
+            products = existingCookieData.split('-');
+        }
+        else {
+            products = [];
+        }
+
+        var productID = $(this).attr('data-id');
+
+        products.push(productID);
+
+        $.cookie('CartProducts', products.join('-'), { path: '/' });
+
+        updateCartProducts();
+
+        swal("Done", "Product Added to Cart!", "success");
+    });
+
+</script>

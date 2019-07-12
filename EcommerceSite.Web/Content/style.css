@@ -1,0 +1,277 @@
+﻿html{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+   body{
+       margin:0;       
+       padding:0;
+       box-sizing:border-box;
+      
+       
+       
+   }
+#wrapper {
+    min-height: 100vh;
+}
+   .cartBtn{
+       position:relative;
+       font-size:25px;       
+       margin-top:6px;
+       margin-left:6px;
+   }
+    .cartBtn:hover{
+        cursor:pointer;
+    }
+    .productCount {
+        position: absolute;
+        top: -10px;
+        right: -12px;
+        font-size: 17px;
+        color: red;
+    }
+.sCart {
+    position: fixed;
+    min-height: 10rem;
+    width: 0;
+    top: 0;
+    right: 0;
+    overflow: hidden;    
+    z-index: 500;
+    transition: all 1s ease-in-out;
+}
+
+.showCart {
+    z-index:1000;
+    min-width: 34%;
+    transform:rotateY(-360deg)
+}
+
+
+.carousel-item {
+    position: relative;   
+}
+
+.carousel-caption{
+position: absolute;
+top: 50%;
+transform: translateY(-20%);
+}
+
+.box{
+    position:relative;
+}
+.img-content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: white;
+    width:60%;
+    text-transform:uppercase;
+    text-align:center;
+        
+}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        max-width: 100%;
+        max-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        cursor: inherit;
+        display: block;
+    }
+
+.productList {
+    list-style: none;
+    display: grid;
+    justify-content:flex-start;
+}
+.productList li{
+    
+    color:white;
+    margin-bottom:10px;
+    padding:5px;
+    border-radius:5px;
+    width:100%;
+}
+    .productList li:hover{
+        opacity:.5;
+    }
+
+    
+
+.filter-section{
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .2);
+    border-radius:10px;
+    display:grid;
+    justify-content:center;
+    padding:10px;
+   
+   
+} .filter-section li :hover{
+      cursor:pointer;
+      
+  }
+  .price-slider.ui-slider-horizontal {
+    height: 3px;   
+}
+
+    .price-slider.ui-slider-horizontal .ui-slider-handle {
+        top: 50%;
+        margin-top: -6px;
+        width: 12px;
+        height: 12px;
+        background: #5bc0de;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+    }
+
+.product-detail{
+    padding:20px;
+    box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .2);
+}
+
+.product-img{
+    position:relative;
+}
+.zoom-popup{
+    position:absolute;
+    bottom:0;
+    left:20px;
+}
+.title {
+    font-size:20px;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: lightblue;
+    color: white;
+    position:relative;
+} 
+.product-price{
+    position:absolute;
+    top:0;
+    right:0;
+    font-size:15px;
+}
+.cartDiv {
+    margin:0 auto;
+    width:70%;
+    color:white;
+    border-radius: 20px;
+}
+.cartDiv a{
+    color:white;
+    text-decoration:none;
+}
+.productImg {
+    position: relative;
+    
+}
+.productAddToCart {
+    position:absolute;
+    top: 0;
+    left: 0;
+    
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #5bc0de;
+    color: white !important;
+    z-index: 100;
+    
+}
+    .productAddToCart:hover{
+        cursor:pointer;
+    }
+    .productView {
+        position: absolute;
+        top: 30%;
+        left: 30%;
+        background: #5bc0de;
+        text-decoration: none;
+        width: 100px;
+        color: white;
+        text-transform: uppercase;
+        opacity: 0;
+        transition: all 1s ease;
+    }
+.productImg:hover .productView{
+    opacity:1;
+}
+    .productAddToCart img{
+        width:20px;
+        
+    }
+    .flat-pagination {
+        list-style: none;
+        background-color: darkgray;
+    }
+    .flat-pagination li {
+        display: inline;
+        font-weight:bold;
+        font-size:20px;
+        margin:10px;
+        
+        color:black;
+    }
+        
+        .productAddToCart:hover {
+            opacity: .5;
+            color: black;
+        }
+
+    .productAddToCart a {
+        
+        text-decoration: none;
+        color:white;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.footer {
+    margin:0;
+    width: 100%;
+    max-height: 300px;
+    line-height: 60px; /* Vertically center the text there */
+    background-color: black;
+}
+.footer a{
+    color:white;
+    text-decoration:none;
+}
+.footerLinks{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+}
+.footer ul li{
+    margin:0;
+    padding:0;
+}

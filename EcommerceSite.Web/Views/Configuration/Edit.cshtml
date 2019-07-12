@@ -1,0 +1,43 @@
+﻿@model EcommerceSite.Entities.Config
+@{
+    ViewBag.Title = "Edit";
+}
+
+<div class="container-fluid m-5 p-3 d-flex justify-content-center ">
+    @using (Html.BeginForm())
+    {
+        <h4 class=" p-3 bg-info text-white text-uppercase ">Edit Configuration</h4>
+        <div class="form-horizontal  ">
+
+
+            @Html.ValidationSummary(true, "", new { @class = "text-danger text-center" })
+            <div class="form-group">
+                @Html.LabelFor(x => x.Key, new { @class = "control-label col-md-2 mx-auto text-uppercase font-weight-bold" })
+                <div class="col-md-10">
+                    @Html.DisplayFor(x => x.Key, new { @class = "form-control font-weight-light " })
+                    @*@Html.ValidationMessageFor(x => x.Key, "", new { @class = "text-danger" })*@
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(x => x.Value, new { @class = "control-label col-md-2 text-uppercase font-weight-bold" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(x => x.Value, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(x => x.Value, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10 text-center mb-3">
+                    <input type="submit" value="Update" class="btn-block btn-info text-center" />
+                </div>
+                <div class="text-center">
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            </div>
+        
+           
+        </div>
+    }
+
+
+</div>

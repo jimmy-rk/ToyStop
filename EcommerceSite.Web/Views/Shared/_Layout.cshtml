@@ -1,0 +1,171 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToyStop</title>
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css" integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf" crossorigin="anonymous">
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/modernizr")
+   
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+</head>
+<body>
+    <div class="sCart bg-primary"></div>
+    @*<img src="https://www.todaysparent.com/wp-content/uploads/2019/06/how-to-keep-your-baby-under-6-months-safe-from-the-sun-1280x960-440x248-1560971189.jpg" alt="Alternate Text" />*@
+    <div id="wrapper" class="container-fluid">
+        <nav class="navbar navbar-expand-lg navbar-light bg-info text-white">
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="ml-3 mr-5 ">
+                @*<img src="~/Content/images/logo.png" style="width:40px;"/> @Html.ActionLink("SHOESHOP", "Index", "Home", new { area = "" }, new { @class = "navbar-brand"  })*@
+
+                <a href='@Url.Action("Index", "Home")' class="font-weight-bolder text-dark text-decoration-none h3">
+                    <img src="~/Content/images/logo.png" style="width:200px;" />
+                </a>
+            </div>
+            <div class="navbar-collapse collapse" id="navbarSupportedContent">
+
+                <ul class="nav navbar-nav ml-5 m-auto text-white">
+                    <li class="nav-item">@Html.ActionLink("Home", "Index", "Home", null, new { @class = "nav-link  font-weight-bold text-decoration-none text-uppercase" })</li>
+                    <li class="nav-item">@Html.ActionLink("Shop", "Index", "Shop", null, new { @class = "nav-link  font-weight-bold text-decoration-none text-uppercase" })</li>
+                    <li class="nav-item">
+                            @Html.ActionLink("Checkout", "Checkout", "Shop", null, new { @class = "nav-link  font-weight-bold text-decoration-none text-uppercase" })
+                    </li>
+                    <li class="nav-item dropdown">
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            if (User.IsInRole("admin"))
+                            {
+                                <a class="nav-link dropdown-toggle  bg-info font-weight-bold text-uppercase" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Admin
+                                </a>
+                                <div class="dropdown-menu bg-info" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item  font-weight-bold text-uppercase" href="@Url.Action("Index", "Category")">Category</a>
+                                    <a class="dropdown-item  font-weight-bold text-uppercase" href="@Url.Action("Index", "Product")">Product</a>
+                                    <a class="dropdown-item  font-weight-bold text-uppercase" href="@Url.Action("Index", "Order")">Orders</a>
+                                    <a class="dropdown-item  font-weight-bold text-uppercase" href="@Url.Action("Index", "Configuration")">Configuration</a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item  font-weight-bold text-uppercase" href="@Url.Action("Index", "Roles")">Roles</a>
+                                </div>
+                            }
+                        }
+
+                    </li>
+                </ul>
+                <div class="float-lg-right mr-5"> @Html.Partial("_LoginPartial")</div>
+            </div>
+
+        </nav>
+
+
+        @RenderBody()
+    </div>
+
+    <footer class="footer border-top footer bg-dark" style="z-index:100">
+
+
+        <div class="container mt-3">
+            <div class="row text-center">
+
+                <div class="col-6">
+                    <div class="text-uppercase text-white">
+                        <h4 class="border-bottom">Contact us </h4>
+                        <p>
+                            @ConfigurationsService.Instance.GetConfig("CompanyAdress").Value
+                        </p>
+                    </div>
+                    <ul class="list-inline">
+
+                        <li class="list-inline-item">
+                            <a href="@ConfigurationsService.Instance.GetConfig("InstagramURL").Value" target="_blank" style="color:#fe4164"><i class="fab fa-instagram fa-2x"></i></a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a href="@ConfigurationsService.Instance.GetConfig("FacebookURL").Value" target="_blank" style="color: #3b5998"><i class="fab fa-facebook-square fa-2x"></i></a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a href="@ConfigurationsService.Instance.GetConfig("YoutubeURL").Value" target="_blank" style="color:#c4302b"><i class="fab fa-youtube fa-2x"></i></a>
+                        </li>
+
+                        <li class="list-inline-item">
+                            <a href="@ConfigurationsService.Instance.GetConfig("TwitterURL").Value" target="_blank" style="color:#00acee"><i class="fab fa-twitter-square fa-2x"></i></a>
+                        </li>
+
+
+
+                    </ul>
+
+
+
+                </div>
+
+                <div class="col-6 text-uppercase">
+                    <h4 class="border-bottom text-white">Quick Links </h4>
+                    <div class="footerLinks">
+
+                        <ul class="list-unstyled">
+
+                            <li>
+                                <a href="@Url.Action("Index", "Home")">Home</a>
+                            </li>
+
+                            <li>
+                                <a href="@Url.Action("Index", "Shop")">Shop</a>
+                            </li>
+
+
+
+
+                        </ul>
+                        <ul class="list-unstyled">
+
+
+
+                            <li>
+                                    <a href="@Url.Action("Checkout", "Shop")">Checkout</a>
+                            </li>
+
+                            <li>
+                                @if (Request.IsAuthenticated)
+                                {
+                                    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <a class="text-white text-decoration-none text-uppercase" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
+                                           
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.ActionLink("Log in/Register", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "nav-link text-white  text-decoration-none text-uppercase" })
+                                        
+                                    
+                                }
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+
+
+            </div>
+        </div>
+    </footer>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,41 @@
+﻿@using EcommerceSite.Web.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+
+
+<section id="loginForm" class="container-fluid mx-auto mt-5">
+
+    @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal text-center border border-info w-50 mx-auto", role = "form" }))
+    {
+        <h4 class=" bg-info text-white text-center text-uppercase  mx-auto">Log in</h4>
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group ">
+            @Html.LabelFor(m => m.Email, new { @class = " control-label mx-auto" })
+            @Html.TextBoxFor(m => m.Email, new { @class = "form-control mx-auto" })
+            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "control-label mx-auto" })
+            @Html.PasswordFor(m => m.Password, new { @class = "form-control mx-auto" })
+            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+
+            <input type="submit" value="Log in" class="btn btn-info  mx-auto" />
+
+        </div>
+        <p>
+            @Html.ActionLink("Register as a new user", "Register")
+        </p>
+
+    }
+</section>
+
+    
+

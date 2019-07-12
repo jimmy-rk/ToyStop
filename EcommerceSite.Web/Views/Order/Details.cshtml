@@ -1,0 +1,109 @@
+﻿@model EcommerceSite.Web.ViewModels.OrderDetailsViewModel
+
+@if (Model != null && Model.Order != null)
+{
+    var i = 1;
+    
+        <div class="container m-5 p-5 mx-auto">
+            <div class="row">
+                <div class="col-md-6 order-md-2 mb-4">
+                    <h4 class=" bg-info text-white text-center text-uppercase">Your cart </h4>
+                        
+                   
+                    <ul class="list-group mb-3">
+                        @foreach (var orderItem in Model.Order.OrderItems)
+                        {
+                            <li class="list-item d-flex justify-content-between mt-2" data-id="@orderItem.ID">
+                                <div>
+                                    <h6 class="my-0"> @orderItem.Product.Name - @orderItem.Quantity</h6>
+                                    
+                                </div>
+                                <span class="text-muted"> $ @(orderItem.Quantity * orderItem.Product.Price)</span>
+                            </li>
+
+                            i++;
+                        }
+
+                        <li class="list-item d-flex justify-content-between  border-top">
+                            <span>Total</span>
+                            <strong>$ @Model.Order.TotalAmount</strong>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-md-6 order-md-1 text-uppercase font-weight-bold">
+                    <h4 class=" bg-info text-white text-center">Billing Address </h4>
+                    <form class="mx-auto">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="firstName">Name</label>
+                                <input type="text" class="form-control" id="Name" placeholder="" value="@Model.OrderBy.Name" required="">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="email">Email </label>
+                            <input type="email" class="form-control" id="Email" placeholder="you@example.com" value="@Model.OrderBy.Email">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address">Address</label>
+                            <input type="text" class="form-control" id="address" placeholder="1234 Main St" required="" value="@Model.OrderBy.Address">
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="address">Status</label>
+                            @if (Model.Order.Status != "Delivered")
+                            {
+                                <select name="Status" id="changeStatus">
+
+                                    @foreach (var availableStatus in Model.AvailableStatuses)
+                                    {
+                                        var isSelectedStatus = availableStatus == Model.Order.Status;
+
+                                        <option @(isSelectedStatus ? "selected" : string.Empty)>@availableStatus</option>
+                                    }
+                                   
+                                </select>
+                            }
+                            else
+                            {
+                                <div class="font-weight-light">Delivered</div>
+                            }
+                            </div>
+
+                    </form>
+                </div>
+            </div>
+        </div><!-- /.container -->
+    
+
+    <script>
+	$("#changeStatus").change(function () {
+		$.ajax({
+			url: '@Url.Action("ChangeStatus", "Order")',
+			data: {
+				status: $("#changeStatus").val(),
+				ID: '@Model.Order.ID'
+			}
+		})
+        .done(function (response) {
+        	if(response.Success)
+        	{
+        		swal("Done", "Your Order has been updated.", "success");
+        	}
+        	else {
+        		swal("Error", "Unable to update Order", "warning");
+        	}
+        })
+        .fail(function (XMLHttpRequest, textStatus, errorThrown) {
+        	alert("FAIL");
+        });
+	});
+    </script>
+}
+else
+{
+<div>
+    <h1 class=" text-danger text-uppercase ">No orders found.</h1>
+</div>
+}

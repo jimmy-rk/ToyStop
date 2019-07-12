@@ -1,0 +1,32 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "Edit";
+}
+
+
+
+    <div class="container-fluid mx-auto mt-5 pt-5 w-50">
+
+        <h2 class="text-center p-3 bg-info text-white text-uppercase">Edit Role</h2>
+        <a class="btn btn-info " href="@Url.Action("Index", "Roles")">Roles</a>
+        <a class="btn btn-info" href="@Url.Action("ManageUserRoles", "Roles")">Manage User/Role</a>
+
+        @using (Html.BeginForm())
+        {
+
+            @Html.AntiForgeryToken()
+            @Html.ValidationSummary(true)
+
+            <div class="form-group text-center text-uppercase font-weight-bold">
+                @Html.HiddenFor(m=>m.Id)
+                Role  @Html.TextBoxFor(m=>m.Name, new { @class = "form-control mx-auto mb-2" })
+
+                <input type="submit" value="Save" class="btn btn-info form-control mx-auto" />
+
+            </div>
+
+
+
+        }
+
+    </div>

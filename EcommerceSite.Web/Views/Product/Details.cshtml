@@ -1,0 +1,54 @@
+﻿@model EcommerceSite.Web.ViewModels.ProductViewModel
+
+@if (Model != null && Model.Product != null)
+{
+    var defaultImageURL = "/Content/system/placeholder-image.png";
+    var imageURL = string.IsNullOrEmpty(Model.Product.ImageURL) ? defaultImageURL : Model.Product.ImageURL;
+
+
+
+
+<section class="mt-5 pt-5">
+    <div class="container product-detail ">
+        <div class="row">
+            <div class="col-md-6">
+                <img class="product-img img-fluid"src="@imageURL" alt="Image">
+                <a href="@imageURL" class="zoom-popup"><span class="fa fa-search-plus"></span></a>
+            </div><!-- /.col-md-6 -->
+
+            <div class=" col-md-6">
+                <div class="content-detail">
+                     <h2 class="bg-info text-white text-center">@Model.Product.Name</h2>
+                     <p class="font-weight-bold">$@Model.Product.Price</p>
+                    <p>@Model.Product.Description</p>
+                     
+                                               
+                     @*<div  w-50 text-center" style="border-radius:5px;">
+                         <a data-id="@Model.Product.ID" class="productAddToCart" href="#">ADD TO CART</a>
+                     </div>*@
+                     <div class="product-categories m-2">
+                        <span>Categories: </span>@Model.Product.Category.Name 
+                     </div>
+                        
+                </div>
+            </div>
+        </div><!-- /.row -->
+    </div><!-- /.container -->
+</section><!-- /.flat-row -->
+
+
+
+@*<section class="mt-5 ">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <div class="mb-5 ">
+                    <h2 class="title">Related Products</h2>
+                </div>
+                @{Html.RenderAction("Products", "Widgets", new { isLatestProducts = false , CategoryID=Model.Product.Category.ID});}
+            </div>
+        </div> /.row 
+    </div>
+</section>*@
+}
+

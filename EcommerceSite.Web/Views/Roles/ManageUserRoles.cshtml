@@ -1,0 +1,68 @@
+﻿
+@{
+    ViewBag.Title = "ManageUserRoles";
+}
+<div class="container-fluid mt-5 pt-5 ">
+    <h2 class="text-center p-3 bg-info text-white text-uppercase">Manage Users/Roles<a class="btn btn-light float-right" href="@Url.Action("Index", "Roles")">Roles</a></h2>
+
+    @using (Html.BeginForm("RoleAddToUser", "Roles", new { @class = "form-horizontal text-center  w-50 mx-auto", role = "form" }))
+    {
+        <h4 class="text-center  bg-info text-white text-uppercase w-50 mx-auto">Assign a role to a User</h4>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+        <div class="form-group text-center">
+            User Name: @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control mx-auto" })
+            Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control mx-auto mb-2" })
+            <input type="submit" value="Save" class="btn btn-info form-control mx-auto" />
+
+        </div>
+
+
+
+    }
+
+
+    @using (Html.BeginForm("GetRoles", "Roles", new { @class = "form-horizontal text-center border border-info w-50 mx-auto", role = "form" }))
+    {
+        <h4 class="text-center  bg-info text-white text-uppercase w-50 mx-auto">Find User's Roles</h4>
+        @Html.AntiForgeryToken()
+        <div class="form-group text-center">
+            User Name: @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control mx-auto mb-2" })
+            <input class="btn btn-info form-control" type="submit" value="Find Roles" />
+        </div>
+    }
+
+    @if (ViewBag.RolesForThisUser != null)
+    {
+        <div class="bg-info w-50 text-center mx-auto text-white">
+            <h3>Roles:</h3>
+            <ol class="w-25 mx-auto">
+                @foreach (string s in ViewBag.RolesForThisUser)
+                {
+                    <li>@s</li>
+                }
+            </ol>
+        </div>
+    }
+
+
+    <h3></h3>
+
+    @using (Html.BeginForm("DeleteRoleForUser", "Roles", new { @class = "form-horizontal text-center border-bottom  w-50 mx-auto", role = "form" }))
+    {
+    <h4 class="text-center  bg-info text-white text-uppercase w-50 mx-auto">Remove A role from a user</h4>
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true)
+
+    <div class="form-group text-center">
+        User Name: @Html.DropDownList("UserName", (IEnumerable<SelectListItem>)ViewBag.Users, "Select ...", new { @class = "form-control mx-auto mb-2" })
+        Role Name: @Html.DropDownList("RoleName", (IEnumerable<SelectListItem>)ViewBag.Roles, "Select ...", new { @class = "form-control mx-auto mb-2" })
+        <input type="submit" class="btn btn-info form-control mb-5" value="Remove Role" />
+    </div>
+
+        
+    }
+
+
+    </div>

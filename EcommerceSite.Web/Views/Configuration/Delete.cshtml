@@ -1,0 +1,17 @@
+﻿@model EcommerceSite.Entities.Config
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="container-fluid m-5 p-5">
+
+
+    @using (Html.BeginForm())
+    {
+        <h4 class=" p-3 text-danger text-uppercase">Are you sure you want to delete the record?</h4>
+        <div class=" form-group">
+            <input type="submit" value="Delete" class="form-control btn btn-danger mx-auto" /><br />
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

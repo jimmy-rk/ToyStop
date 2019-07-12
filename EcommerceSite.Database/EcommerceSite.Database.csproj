@@ -1,0 +1,138 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{104BF7EB-BB16-403F-8DC5-16BE0C8A1E1C}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>EcommerceSite.Database</RootNamespace>
+    <AssemblyName>EcommerceSite.Database</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <Deterministic>true</Deterministic>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="ESContext.cs" />
+    <Compile Include="Migrations\201904040801031_Initialized.cs" />
+    <Compile Include="Migrations\201904040801031_Initialized.Designer.cs">
+      <DependentUpon>201904040801031_Initialized.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904060959216_ConfigurationTable.cs" />
+    <Compile Include="Migrations\201904060959216_ConfigurationTable.Designer.cs">
+      <DependentUpon>201904060959216_ConfigurationTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904062308131_ImageURLAddedInProduct.cs" />
+    <Compile Include="Migrations\201904062308131_ImageURLAddedInProduct.Designer.cs">
+      <DependentUpon>201904062308131_ImageURLAddedInProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904070003139_categoryIDInProduct.cs" />
+    <Compile Include="Migrations\201904070003139_categoryIDInProduct.Designer.cs">
+      <DependentUpon>201904070003139_categoryIDInProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904071407561_ValidationAdded.cs" />
+    <Compile Include="Migrations\201904071407561_ValidationAdded.Designer.cs">
+      <DependentUpon>201904071407561_ValidationAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091010336_AddedOrderAndOrderItems.cs" />
+    <Compile Include="Migrations\201904091010336_AddedOrderAndOrderItems.Designer.cs">
+      <DependentUpon>201904091010336_AddedOrderAndOrderItems.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091105152_AddedQuantityColInOrderItem.cs" />
+    <Compile Include="Migrations\201904091105152_AddedQuantityColInOrderItem.Designer.cs">
+      <DependentUpon>201904091105152_AddedQuantityColInOrderItem.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904091105576_AddedQuantityColInOrderItem1.cs" />
+    <Compile Include="Migrations\201904091105576_AddedQuantityColInOrderItem1.Designer.cs">
+      <DependentUpon>201904091105576_AddedQuantityColInOrderItem1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201904181029215_StockAddedToProduct.cs" />
+    <Compile Include="Migrations\201904181029215_StockAddedToProduct.Designer.cs">
+      <DependentUpon>201904181029215_StockAddedToProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201906221833331_AnotationChange.cs" />
+    <Compile Include="Migrations\201906221833331_AnotationChange.Designer.cs">
+      <DependentUpon>201906221833331_AnotationChange.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\EcommerceSite.Entities\EcommerceSite.Entities.csproj">
+      <Project>{2D04AC7A-F9C1-4709-8FA9-2A93B30BFA88}</Project>
+      <Name>EcommerceSite.Entities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201904040801031_Initialized.resx">
+      <DependentUpon>201904040801031_Initialized.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904060959216_ConfigurationTable.resx">
+      <DependentUpon>201904060959216_ConfigurationTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904062308131_ImageURLAddedInProduct.resx">
+      <DependentUpon>201904062308131_ImageURLAddedInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904070003139_categoryIDInProduct.resx">
+      <DependentUpon>201904070003139_categoryIDInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904071407561_ValidationAdded.resx">
+      <DependentUpon>201904071407561_ValidationAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091010336_AddedOrderAndOrderItems.resx">
+      <DependentUpon>201904091010336_AddedOrderAndOrderItems.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091105152_AddedQuantityColInOrderItem.resx">
+      <DependentUpon>201904091105152_AddedQuantityColInOrderItem.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904091105576_AddedQuantityColInOrderItem1.resx">
+      <DependentUpon>201904091105576_AddedQuantityColInOrderItem1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201904181029215_StockAddedToProduct.resx">
+      <DependentUpon>201904181029215_StockAddedToProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906221833331_AnotationChange.resx">
+      <DependentUpon>201906221833331_AnotationChange.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>

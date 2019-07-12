@@ -1,0 +1,109 @@
+﻿@model EcommerceSite.Web.ViewModels.EditCategoryViewModel
+
+@{
+    ViewBag.Title = "Edit";
+    var trueChecked= Model.isFeatured ? "checked" : string.Empty;
+    var falseChecked= !Model.isFeatured ? "checked" : string.Empty;
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/system/placeholder-image.png";
+
+}
+    
+
+
+<form id="editCategory" class="m-5 p-5 text-uppercase border border-info">
+    <h2 class="mt-2 text-center text-uppercase  mb-3 bg-info text-white">Edit Category</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <input type="hidden" name="ID" value="@Model.ID" />
+            <div class="form-group">
+                <label>Name<span class="text-danger">*</span></label>
+                <input name="Name" class="form-control" value="@Model.Name" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="7" name="Description" class="form-control" value="@Model.Description" />
+            </div>
+            <div class="form-group">
+                <label>Is Featured ?</label>
+                <input name="isFeatured" type="radio" value="true"  @trueChecked/> True
+                <input name="isFeatured" type="radio" value="false" @falseChecked/> False
+            </div>
+
+            <div div class="form-group">
+                <label>Image</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL"/>
+                <span class="btn-lg btn-info btn-file">
+                    Browse <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </span>
+            </div>
+
+            <button class="btn-info btn-lg " type="button" id="updateBtn">Update</button>
+            <button class="btn-info  btn-lg" type="button" id="cancelBtn">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <div class="img-thumbnail ">
+                <img class="img-fluid" id="categoryImage" src="@imageURL" />
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+    $('#imageUpload').change(function () {
+        var element = this;
+
+        var formData = new FormData();
+
+        var totalFiles = element.files.length;
+
+        for (var i = 0; i < totalFiles; i++) {
+            var file = element.files[i];
+            formData.append('Photo', file);
+        }
+        $.ajax({
+            type: 'POST',
+            url: 'Shared/UploadImage',
+            dataType: 'json',
+            data: formData,
+            contentType: false,
+            processData: false,
+        })
+            .done(function (response) {
+                if (response.success) {
+                    $('#ImageURL').val(response.ImageURL);
+                    $('#categoryImage').attr("src",response.ImageURL)
+                }
+            })
+            .fail(function () {
+                alert('Fail')
+            })
+    })
+
+
+    $("#updateBtn").click(function () {
+        
+        $.ajax({
+            type: 'POST',
+            url: '/Category/Edit',
+            data: $('#editCategory').serialize()
+           
+       })
+            .done(function (response) {
+                $('#tableContainer').html(response);
+                $('#actionContainer').html('');
+                focusAction("tableContainer");
+            })
+            .fail(function () {
+                alert("Failed");
+            });
+
+    });
+
+    $("#cancelBtn").click(function () {
+
+        $('#actionContainer').html('');
+        focusAction("tableContainer");
+
+    });
+</script>

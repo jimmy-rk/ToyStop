@@ -1,0 +1,40 @@
+﻿@model IEnumerable<EcommerceSite.Entities.Config>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="container-fluid m-5 p-5 mx-auto">
+    <h2 class="text-center p-3 bg-info text-white text-uppercase">Configurations</h2>
+    @Html.ActionLink("Create New", "Create")
+    <table class="table table-striped mx-auto">
+        <thead class="bg-info text-white text-uppercase">
+            <tr>
+                <th class="font-weight-bold">Key</th>
+                <th class="font-weight-bold">Value</th>
+                <th class="font-weight-bold wrap-td">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null && Model.Count() > 0)
+            {
+                foreach (var config in Model)
+                {
+                    <tr>
+                        <td style="width: 15%">@config.Key</td>
+                        <td class="text-wrap" style="width: 70%">
+                            @config.Value
+                        </td>
+                        <td class="wrap-td" style="width: 15%">
+                            @Html.ActionLink("Edit", "Edit", new { key = config.Key }) |
+                            @Html.ActionLink("Delete", "Delete", new { key = config.Key })
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="3" class="text-danger">No Categories found.</td></tr>
+            }
+        </tbody>
+    </table>
+</div>

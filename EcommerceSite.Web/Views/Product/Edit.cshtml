@@ -1,0 +1,148 @@
+﻿@model EcommerceSite.Web.ViewModels.EditProductViewModel
+@{
+    ViewBag.Title = "Edit";
+
+    var imageURL = !string.IsNullOrEmpty(Model.ImageURL) ? Model.ImageURL : "/Content/system/placeholder-image.png" ;
+}
+
+
+
+
+<form id="editProduct" class="m-5 p-5 text-uppercase border border-info">
+    <h2 class="mt-2 text-center text-uppercase  mb-3 bg-info text-white">Edit Product</h2>
+    <div class="row">
+        <div class="col-md-6">
+            <input type="hidden" name="ID" value="@Model.ID" />
+            <div class="form-group">
+                <label>Category</label>
+                <select name="CategoryID" class="form-control">
+                    @foreach (var category in Model.AvailableCategories)
+                    {
+                        var selected = category.ID == Model.CategoryID ? "selected" : string.Empty;
+                        <option value="@category.ID" @selected>@category.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Name</label>
+                <input name="Name" class="form-control" value="@Model.Name" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="7" name="Description" class="form-control">@Model.Description</textarea>
+            </div>
+            <div class="form-group">
+                <label>Stock</label>
+                <input name="Stock" class="form-control" value="@Model.Stock" />
+            </div>
+            <div class="form-group">
+                <label>Price</label>
+                <input name="Price" class="form-control" value="@Model.Price" />
+            </div>
+
+            <div div class="form-group">
+                <label>Image</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" value="@Model.ImageURL" />
+                <span class="btn-lg btn-info btn-file">
+                    Browse <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </span>
+            </div>
+
+            <button class="btn-info btn-lg " type="button" id="updateBtn">Update</button>
+            <button class="btn-info  btn-lg" type="button" id="cancelBtn">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <div class="img-thumbnail ">
+                <img class="img-fluid" id="categoryImage" src="@imageURL" />
+            </div>
+        </div>
+    </div>
+</form>
+<script>
+
+    $('#editProduct').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength: 50
+            },
+           
+            Price: {
+                range: [1, 100000]
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum length is 5',
+                maxlength: 'Maximum length is 50'
+            },
+           
+            Price: {
+                range: 'Price must be between 1 and 100000'
+
+            }
+
+        }
+    });
+
+    $('#imageUpload').change(function () {
+        var formData = new FormData();
+        var totalFiles = this.files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = this.files[i];
+            formData.append("Photo", file)
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Shared/UploadImage',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+                $('#ImageURL').val(response.ImageURL);
+                $('#productImage').attr("src", response.ImageURL)
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+    })
+    $('#updateBtn').click(function () {
+        if ($('#editProduct').valid()) {
+            $.ajax({
+                type: 'POST',
+                url: '/Product/Edit',
+                data: $('#editProduct').serialize()
+            })
+
+                .done(function (response) {
+                    $('#tableContainer').html(response);
+                    $('#actionContainer').html('');
+                    focusAction('tableContainer');
+                })
+                .fail(function () {
+                    alert("Problem saving the form")
+                });
+        }
+        else {
+            swal({
+                title: "  Warning",
+                text: "Please enter all required field",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+        }
+
+    })
+          
+
+    $('#cancelBtn').click(function () {
+        $('#actionContainer').html('');
+        focusAction('tableContainer');
+    });
+</script>

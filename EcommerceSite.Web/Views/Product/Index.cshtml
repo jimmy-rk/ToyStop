@@ -1,0 +1,29 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+
+<div class="container-fluid m-5 p-5 mx-auto" >
+    <h2 class="text-center p-3 bg-info text-white">Products</h2>
+    <div id="tableContainer">
+        @{
+            Html.RenderAction("ProductTable");
+        }
+
+    </div>
+
+    <div id="actionContainer">
+
+    </div>
+
+</div>
+<script>
+    function focusAction(element) {
+        $('html,body').animate({
+            scrollTop: $('#' + element).offset().top - 100
+        }, 1000)
+    }
+</script>

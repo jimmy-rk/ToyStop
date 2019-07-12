@@ -1,0 +1,146 @@
+﻿
+@{
+    ViewBag.Title = "Create";
+    var imageURL = "/Content/system/placeholder-image.png";
+}
+    
+
+<form id="createCategory" class="m-5 p-5 text-uppercase border border-info">
+    <h2 class="mt-2 text-center text-uppercase  mb-3 bg-info text-white">Create Category</h2>
+    <div class="row">
+        <div class="col-md-6">
+            
+            <div class="form-group">
+                <label>Name<span class="text-danger">*</span></label>
+                <input name="Name" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Description</label>
+                <textarea rows="7" name="Description" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label>Is Featured ?</label>
+                <input name="isFeatured" type="radio" value="true" /> True
+                <input name="isFeatured" type="radio" value="false" /> False
+            </div>
+            
+            <div div class="form-group">
+                <label>Image</label>
+                <input type="hidden" id="ImageURL" name="ImageURL" />
+                <span class="btn-lg btn-info btn-file">
+                    Browse <input id="imageUpload" name="Image" type="file" accept=".png, .jpg" />
+                </span>
+            </div>
+
+            <button class="btn-info btn-lg" type="button" id="saveBtn">Save</button>
+            <button class="btn-info btn-lg" type="button" id="cancelBtn">Cancel</button>
+        </div>
+        <div class="col-md-6">
+            <div class="img-thumbnail ">
+                <img class="img-fluid" id="categoryImage" src="@imageURL" />
+            </div>
+        </div>
+    </div>
+</form>
+
+
+<script>
+
+    $('#createCategory').validate({
+        rules: {
+            Name: {
+                required: true,
+                minlength: 5,
+                maxlength:50                
+            },
+            Description: {
+                maxlength:500
+            }
+        },
+        messages: {
+            Name: {
+                required: 'Name is required',
+                minlength: 'Minimum length is 5',
+                maxlength: 'Maximum length is 50'
+            },
+            Description: {
+                maxlength: 'Maximum length is 500'
+            }
+        
+        }
+    });
+
+    $('#imageUpload').change(function () {
+        var formData = new FormData();       
+        var totalFiles = this.files.length;
+        for (var i = 0; i < totalFiles; i++) {
+            var file = this.files[i];
+            formData.append("Photo",file)
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/Shared/UploadImage',
+            data: formData,
+            dataType: 'json',
+            contentType: false,
+            processData: false
+        })
+            .done(function (response) {
+                $('#categoryImage').attr('src', response.ImageURL);
+                $('#ImageURL').val( response.ImageURL);
+            })
+            .fail(function () {
+                swal({
+                    title: "Warning",
+                    text: "Error Uploading Image",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                })
+            });
+    })
+
+    $("#saveBtn").click(function () {
+        
+        if ($('#createCategory').valid()) {
+
+            $.ajax({
+                type: 'POST',
+                url: '/Category/Create',
+                data: $('#createCategory').serialize()
+            })
+                .done(function (response) {
+                    $('#tableContainer').html(response);
+                    $('#actionContainer').html('');
+                    focusAction("tableContainer");
+                })
+                .fail(function () {
+                    swal({
+                        title: "Warning",
+                        text: "Please Enter All Required Fields",
+                        icon: "warning",
+                        buttons: true,
+                        dangerMode: true,
+                    })
+                });
+        }
+        else {
+            swal({
+                title: " js Warning",
+                text: "Error Uploading Image",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+            })
+        }
+        
+
+    });
+
+    $("#cancelBtn").click(function () {
+
+        $('#actionContainer').html('');
+        focusAction("tableContainer");
+    });
+</script>

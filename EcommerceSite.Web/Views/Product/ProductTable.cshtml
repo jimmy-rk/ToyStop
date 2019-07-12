@@ -1,0 +1,223 @@
+﻿@model EcommerceSite.Web.ViewModels.ProductSearchViewModel
+@{
+    ViewBag.Title = "ProductTable";
+}
+
+
+<form method="post" class="form-inline mt-4">
+    <div class="form-group">
+        <input id="searchTxt" name="Search" class="form-control mr-sm-2" placeholder="Search" />
+        <button type="button" id="searchBtn" class="btn btn-info my-2 my-sm-0">Search</button>
+        <button type="button" id="resetBtn" class="btn btn-info my-2 my-sm-0 mx-2">Reset</button>
+        <button type="button" id="newBtn" class="btn btn-info my-2 my-sm-0 mx-2">New</button>
+    </div>
+</form><br />
+
+<table id="ProductsTable" class="table table-striped">
+    <thead class="bg-info text-white text-uppercase">
+        <tr>
+            <th class="font-weight-bold ">Image</th>
+            <th class="font-weight-bold ">Product Name</th>
+            <th class="font-weight-bold ">Category</th>
+            <th class="font-weight-bold ">Description</th>
+            <th class="font-weight-bold ">Price</th>
+            <th class="font-weight-bold ">Stock</th>
+            <th class="font-weight-bold ">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Products != null && Model.Products.Count > 0)
+        {
+            foreach (var product in Model.Products)
+            {
+        <tr>
+            <td><img src="@product.ImageURL" width="100" /></td>
+            <td>@product.Name</td>
+            <td>
+                @if (product.Category != null)
+                {
+                    <text>@product.Category.Name</text>
+                }
+                else
+                {
+                    <text>---</text>
+                }
+            </td>
+            <td>@product.Description</td>
+            <td>@product.Price</td>
+            <td>@product.Stock</td>
+            <td>
+                <button class="editBtn btn-info mb-2" style="width:80px" dataid="@product.ID">Edit</button>
+                <button class="deleteBtn btn-info mb-2" style="width:80px" dataid="@product.ID">Delete</button>
+            </td>
+        </tr>
+            }
+
+        }
+        else
+        {
+            <tr>
+                <td class="text-danger" colspan="4">No Products Found</td>
+            </tr>
+        }
+
+    </tbody>    
+</table>
+<div>
+   
+    @if (Model.Pager != null)
+    {
+        if (Model.Pager.CurrentPage > 1)
+        {
+            <button class="pageBtn" pageNo="1">First</button>
+            <button class="pageBtn" pageNo="@(Model.Pager.CurrentPage-1)">Previous</button>
+        }
+        for (var page = Model.Pager.StartPage; page <= Model.Pager.EndPage; page++)
+        {
+            string activeClass = Model.Pager.CurrentPage == page ? "active bg-info" : string.Empty;
+            <button class="pageBtn" pageNo="@page">@page</button>
+
+        }
+        if (Model.Pager.CurrentPage < Model.Pager.TotalPages)
+        {
+            <button class="pageBtn" pageNo="@(Model.Pager.CurrentPage+1)">Next</button>
+            <button class="pageBtn" pageNo="@(Model.Pager.EndPage)">Last</button>
+        }
+
+
+    }
+</div>
+
+<script>
+
+   
+
+    $('.pageBtn').click(function () {
+
+
+        $.ajax({
+            url: '/Product/ProductTable',
+            data: { pageNo: $(this).attr('PageNo') }
+
+        })
+            .done(function (response) {
+                $('#tableContainer').html(response);
+                
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+
+    });
+
+    
+
+    $('#searchBtn').click(function () {
+        var searchValue = $('#searchTxt').val();
+
+        $.ajax({
+            url: '/Product/ProductTable',
+            data: { search: searchValue }
+        })
+            .done(function (response) {
+                $('#tableContainer').html(response);
+
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+
+    });
+
+    $('#resetBtn').click(function () {
+        var searchValue = '';
+
+        $.ajax({
+            url: '/Product/ProductTable',
+            data: { search: searchValue }
+        })
+            .done(function (response) {
+                $('#tableContainer').html(response);
+
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+
+    });
+
+
+    $('#newBtn').click(function () {
+        
+
+        $.ajax({
+            url: '/Product/Create',
+            
+           
+        })
+            .done(function (response) {
+                $('#actionContainer').html(response);
+                focusAction('actionContainer')
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+
+    });
+    $('.editBtn').click(function () {        
+
+        $.ajax({
+            url: '/Product/Edit',
+            data: {
+                ID: $(this).attr('dataID')
+            }
+           
+        })
+            .done(function (response) {
+                $('#actionContainer').html(response);
+                focusAction("actionContainer");
+            })
+            .fail(function () {
+                alert("Failed")
+            });
+
+    });
+    $('.deleteBtn').click(function () {  
+        swal({
+            title: "Confirm",
+            text: "Are you sure you want to delete this product!",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+                if (willDelete) {
+
+                    $.ajax({
+                        type: 'POST',
+                        url: '/Product/Delete',
+                        data: {
+                            ID: $(this).attr('dataID')
+                        }
+
+                    })
+                        .done(function (response) {
+                            $('#tableContainer').html(response);
+                            swal("The Product is deleted!", {
+                                icon: "success",
+                            });
+                        })
+                        .fail(function () {
+                            alert("Failed")
+                        });
+                    
+                } 
+            });
+        
+        
+
+    });
+    
+
+    
+</script>
